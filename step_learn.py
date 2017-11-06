@@ -174,8 +174,8 @@ class MCFloorLearn(GeneralFloorLearn):
         return p3
     def get_y(self,p1,Z_placeholder,additional_placeholders): return None
     def get_loss(self,p1,y,Y_placeholder, additional_placeholders):
-        return tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(p1, 
-                                                                             tf.reshape(additional_placeholders['label_placeholder'][0],[-1])))
+        return tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=p1, 
+                                                                             labels=tf.reshape(additional_placeholders['label_placeholder'][0],[-1])))
     def my_plot(self,session,fd,y,Y,p,p1,Z_placeholder,additional_placeholders):
         max_class = tf.arg_max(p1, dimension=1)
         max_class_val = (session.run(max_class,feed_dict=fd)).astype(np.int32)
