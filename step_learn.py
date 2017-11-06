@@ -102,7 +102,7 @@ class IsotronFloorLearn(GeneralFloorLearn):
     def max_steps(self):
         return 5000
     def get_y(self,p1,Z_placeholder,additional_placeholders):
-        p1_tile = tf.tile(p1, tf.pack([1, len(self._Z)]))
+        p1_tile = tf.tile(p1, tf.stack([1, len(self._Z)]))
         geq_Z = tf.cast(p1_tile>=Z_placeholder,tf.float32)
         geq_Z_0 = tf.slice(geq_Z,[0,0],[-1,len(self._Z)-1])
         geq_Z_1 = tf.slice(geq_Z,[0,1],[-1,len(self._Z)-1])
@@ -131,7 +131,7 @@ class DifferentiableApproximationFloorLearn(GeneralFloorLearn):
         p1,_,_ = Affine('p1', X_placeholder, 1)
         return p1
     def get_y(self,p1,Z_placeholder,additional_placeholders):
-        p1_tile = tf.tile(p1, tf.pack([1, len(self._Z)-1]))
+        p1_tile = tf.tile(p1, tf.stack([1, len(self._Z)-1]))
         
         first_Z = tf.slice(Z_placeholder,[0,0],[-1,1])
         slice_Z_0 = tf.slice(Z_placeholder, [0,0],[-1,len(self._Z)-1])
